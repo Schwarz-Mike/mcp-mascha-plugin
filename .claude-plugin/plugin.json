@@ -1,0 +1,14 @@
+{
+  "name": "mascha-cosmos",
+  "version": "1.0.0",
+  "description": "Astrologie mit Mascha Cosmos: Geburtshoroskop, Transite, Synastrie, Human Design und Numerologie über den Mascha-MCP-Server — plus fertige Skills für Premium-PDF-Reports.",
+  "author": {
+    "name": "Mike Schwarz",
+    "email": "support@mascha-cosmos.com",
+    "url": "https://app.mascha-cosmos.com"
+  },
+  "homepage": "https://app.mascha-cosmos.com",
+  "repository": "https://github.com/Schwarz-Mike/mcp-mascha-plugin",
+  "license": "MIT",
+  "keywords": ["astrologie", "horoskop", "astrology", "human-design", "numerologie", "mascha-cosmos"]
+}

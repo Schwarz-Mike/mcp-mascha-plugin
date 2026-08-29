@@ -1,0 +1,9 @@
+# Niemals ins oeffentliche Repo
+*.env
+.env*
+*.token
+*.key
+*.pem
+secrets/
+local/
+node_modules/
