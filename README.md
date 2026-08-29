@@ -20,18 +20,41 @@ Fragen oder Probleme: **support@mascha-cosmos.com**
 
 ## Installation
 
-**Im Terminal** — funktioniert überall:
+### Schon Mascha-Skills einzeln installiert?
+
+Dann bitte vorher entfernen, sonst hast du sie doppelt — das Plugin bringt alle mit und
+hält sie aktuell:
+
+```bash
+rm -rf ~/.claude/skills/{astrology-mascha,partnerhoroscope,mutter-kind-horoskop,rectification}
+```
+
+Unter Windows in der PowerShell:
+
+```powershell
+"astrology-mascha","partnerhoroscope","mutter-kind-horoskop","rectification" | ForEach-Object {
+  Remove-Item -Recurse -Force "$env:USERPROFILE\.claude\skills\$_" -ErrorAction SilentlyContinue }
+```
+
+### Variante A — Terminal (empfohlen)
+
+Drei Befehle, danach nur noch anmelden:
 
 ```bash
 claude plugin marketplace add Schwarz-Mike/mcp-mascha-plugin
-```
-
-```bash
 claude plugin install mascha-cosmos@mascha-cosmos
+claude mcp add --transport http --scope user mascha-cosmos https://mcp.mascha-cosmos.com/mcp
 ```
 
-**Oder in Claude Code** über die Oberfläche: Einstellungen → Plugins → Marketplace
-hinzufügen → `Schwarz-Mike/mcp-mascha-plugin` eintragen, dann das Plugin installieren.
+### Variante B — über die Oberfläche
+
+Einstellungen → Plugins → Marketplace hinzufügen → `Schwarz-Mike/mcp-mascha-plugin`
+eintragen → Plugin installieren. Anschliessend fragt Claude, ob der Mascha-Server
+verbunden werden darf — das bestätigen.
+
+> **Nur eine der beiden Varianten wählen.** Wer den dritten Befehl aus Variante A nutzt,
+> soll den Server in Variante B **nicht** zusätzlich bestätigen — sonst ist er doppelt
+> registriert und alle Werkzeuge erscheinen zweimal.
 
 Danach Claude neu starten.
 
