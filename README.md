@@ -1,7 +1,7 @@
 # Mascha Cosmos für Claude
 
 Astrologie, Human Design und Numerologie direkt in Claude — über den Mascha-Cosmos-Server.
-Das Plugin bringt die Serververbindung und vier fertige Skills in einem Schritt mit.
+Das Plugin bringt die Serververbindung und fünf fertige Skills in einem Schritt mit.
 
 ---
 
@@ -20,10 +20,18 @@ Fragen oder Probleme: **support@mascha-cosmos.com**
 
 ## Installation
 
+**Im Terminal** — funktioniert überall:
+
+```bash
+claude plugin marketplace add Schwarz-Mike/mcp-mascha-plugin
 ```
-/plugin marketplace add Schwarz-Mike/mcp-mascha-plugin
-/plugin install mascha-cosmos@mascha-cosmos
+
+```bash
+claude plugin install mascha-cosmos@mascha-cosmos
 ```
+
+**Oder in Claude Code** über die Oberfläche: Einstellungen → Plugins → Marketplace
+hinzufügen → `Schwarz-Mike/mcp-mascha-plugin` eintragen, dann das Plugin installieren.
 
 Danach Claude neu starten.
 
@@ -31,11 +39,12 @@ Danach Claude neu starten.
 deinem Mascha-Konto an und bestätigst den Zugriff. Das passiert einmalig — danach bleibt
 die Verbindung bestehen.
 
-Zum Prüfen, ob alles läuft:
+Zum Prüfen, ob alles läuft, sag einfach:
 
-```
-/mascha-setup
-```
+> „Prüf mal meine Mascha-Einrichtung"
+
+Claude geht dann durch, ob die Verbindung steht, wie viele Sterne du hast und ob deine
+Geburtsdaten hinterlegt sind.
 
 ---
 
@@ -64,7 +73,7 @@ angelegt hast.
 
 ### Die Skills
 
-Vier Arbeitsanleitungen, die Claude automatisch heranzieht, wenn sie passen:
+Fünf Arbeitsanleitungen, die Claude automatisch heranzieht, wenn sie passen:
 
 **`astrology-mascha`** — die Grundlage. Erklärt Claude alle Werkzeuge, ihre Parameter,
 typische Abläufe und die Besonderheiten der Deutung (Huber-Methode, Koch-Häuser,
@@ -81,6 +90,10 @@ begleitet wird. Funktioniert für Mutter oder Vater, Sohn oder Tochter.
 **`rectification`** — Geburtszeit-Rektifikation: rechnet aus bekannten Lebensereignissen
 zurück, wann jemand wahrscheinlich geboren wurde. Für alle, die ihre Geburtszeit nicht
 kennen.
+
+**`mascha-setup`** — prüft die Einrichtung: Verbindung, Sterne-Guthaben, hinterlegte
+Geburtsdaten. Greift automatisch bei Fragen wie „funktioniert Mascha?" oder wenn ein
+Aufruf scheitert.
 
 ---
 
@@ -129,8 +142,8 @@ Beispiele in den Skills verwenden ausschliesslich erfundene Personen.
 
 Kommen weitere Skills dazu, erscheinen sie nach einem Update des Plugins automatisch:
 
-```
-/plugin marketplace update mascha-cosmos
+```bash
+claude plugin marketplace update mascha-cosmos
 ```
 
 ---
@@ -144,4 +157,5 @@ Bei Verbindungsproblemen hilft meist:
 1. Prüfen, ob das Konto auf [app.mascha-cosmos.com](https://app.mascha-cosmos.com)
    freigeschaltet ist und Sterne vorhanden sind
 2. Claude neu starten
-3. `/mascha-setup` aufrufen — der Befehl prüft die Verbindung und sagt, woran es hakt
+3. „Prüf mal meine Mascha-Einrichtung" sagen — Claude prüft die Verbindung und sagt,
+   woran es hakt

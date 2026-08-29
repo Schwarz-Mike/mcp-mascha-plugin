@@ -1,6 +1,7 @@
 ---
 name: mascha-setup
-description: Prüft die Verbindung zu Mascha Cosmos und hilft bei der Einrichtung
+description: Prüft die Verbindung zu Mascha Cosmos und führt durch die Einrichtung. Verwende diesen Skill, wenn jemand die Einrichtung prüfen will, fragt ob die Verbindung steht, nach dem Sterne-Guthaben fragt, wissen will welche Skills verfügbar sind, oder wenn ein Aufruf an Mascha Cosmos scheitert — Trigger: "mascha setup", "einrichtung prüfen", "funktioniert mascha", "bin ich verbunden", "wie viele sterne habe ich", "mascha geht nicht", "verbindung testen".
+version: 1.0.0
 ---
 
 Prüfe die Einrichtung von Mascha Cosmos und führe die Person durch, was noch fehlt.
