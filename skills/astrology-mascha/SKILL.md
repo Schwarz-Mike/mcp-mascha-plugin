@@ -10,12 +10,15 @@ description: >
   business insights, electional astrology, horary, birth time rectification
   (Rektifikation). Ptolemaic + non-Ptolemaic aspects (Semisextil, Quincunx,
   Quintil, Biquintil). Media: generate_image,
-  render_html_to_pdf. Skills: list_skills, get_skill, install_skill (Skill
+  render_html_to_pdf, generate_voice + voice_status (Sprachausgabe /
+  Text-to-Speech / Voice-over in der Mascha-Stimme, MP3 oder WAV --
+  Vorlesen, Sprechertext, Erklaerfilm, Meditation, Audio erzeugen).
+  Skills: list_skills, get_skill, install_skill (Skill
   installieren/hinzufügen — Partnerhoroskop, Mutter-Kind-Horoskop,
   Rektifikation). German: Geburtshoroskop, Synastrie, Kompatibilität,
   Numerologie, Profektionen, Stundenastrologie, Fixsterne, Rektifikation,
   Geburtszeit-Rückrechnung.
-version: 1.15.0
+version: 1.16.0
 ---
 
 # Astrology Mascha — MCP Skill
@@ -55,6 +58,8 @@ Jeder Tool-Call zieht Credits. Überblick:
 | rectification_event_categories (Glossar) | 1 Credit (0 upstream) |
 | generate_image (Evolink GPT-Image-2, medium/1K) | 2 Credits |
 | render_html_to_pdf (Puppeteer, A4) | 5 Credits |
+| `generate_voice` (Gemini TTS) | **5 Credits je angefangene 5000 Zeichen** |
+| `voice_status` (Stand abfragen) | **0 Credits** — beliebig oft |
 
 Bei zu wenig Credits liefert das Tool `isError: true` mit einer
 freundlichen Hinweismeldung ("Nicht genug Credits…" / "Dein Account ist
@@ -85,7 +90,7 @@ default, `"Sidereal"`), `tradition` (`"universal"` default,
 `"classical"`, `"psychological"`), `detail_level` (`"full"` default,
 `"standard"`).
 
-## Tools (134 insgesamt)
+## Tools (137 am Endpoint /mcp)
 
 ### Charts (17) — Berechnung · `/api/v3/charts/*`
 
@@ -412,10 +417,31 @@ Rektifikation = Rückrechnung der genauen Geburtszeit anhand bekannter Lebensere
 
 **Hinweis:** Wenn nur Monat bekannt: `date_precision: "month"` setzen. Je mehr Ereignisse, desto präziser das Ergebnis.
 
-### Media (2) — server-seitige Generierung (NEW v1.7.0)
+### Media (4) — server-seitige Generierung (NEW v1.7.0 · Sprachausgabe seit v1.16.0)
 
 - **`generate_image`** (2 Cr) — KI-Bildgenerierung via Evolink/GPT-Image-2 (medium, 1K). Async (max ~100s). Bild 24h abrufbar unter `mcp.mascha-cosmos.com/generated-images/<uuid>.webp`. Parameter: `prompt` (Pflicht), `size` (optional, z.B. `"16:9"`, `"1024x1024"`).
 - **`render_html_to_pdf`** (5 Cr) — HTML-String → A4-PDF via Puppeteer/Chromium. PDF 24h unter `mcp.mascha-cosmos.com/generated/<filename>.pdf`. Bilder im HTML als absolute URLs einbinden (werden beim Rendering geladen). Parameter: `html` (Pflicht), `filename` (optional).
+
+#### Sprachausgabe — `generate_voice` + `voice_status`
+
+- **`generate_voice`** (5 Cr **je angefangene 5000 Zeichen**) — Text → gesprochenes Audio in der Stimme von Mascha Cosmos, über Google Gemini TTS. Dieselbe Stimme und derselbe Sprechstil wie die Audios in der Mascha-App (beides kommt aus `audio_settings`). Datei 24 h unter `mcp.mascha-cosmos.com/generated-audio/<name>.mp3`.
+  - `text` (Pflicht) — 1 bis **25 000** Zeichen. **Absätze mit Leerzeile trennen**: dort entsteht eine hörbare Pause von 400 ms. Innerhalb eines Absatzes wird bei Bedarf an Satzenden geteilt, dort sind es nur 150 ms — der Absatz bleibt also zusammenhängend.
+  - `voice` (optional) — eine von 15 Stimmen: `Despina` (Mascha, Vorgabe), `Laomedeia`, `Kore`, `Aoede`, `Callirrhoe`, `Leda`, `Autonoe`, `Erinome`, `Achernar`, `Gacrux`, `Zephyr`, `Puck`, `Charon`, `Fenrir`, `Orus`.
+  - `style` (optional, max 300 Zeichen) — Sprechanweisung, z.B. `"Sprich ruhig und feierlich"`. Ohne Angabe gilt der Mascha-Stil aus der App.
+  - `format` (optional) — `"mp3"` (Vorgabe) oder `"wav"`. WAV ist unkomprimiert und deutlich größer — nur nehmen, wenn nachbearbeitet wird.
+  - `filename` (optional) — ohne Endung, nur `a-z 0-9 - _`.
+
+- **`voice_status`** (**0 Cr**) — fragt den Stand eines laufenden Auftrags ab. Parameter: `auftrag` (die Nummer aus `generate_voice`). Kostet nichts, also so oft nachfragen wie nötig.
+
+**Wichtig — so läuft es ab.** `generate_voice` wartet höchstens 20 Sekunden. Kurze Texte sind darin fertig und die Antwort enthält direkt `stand: "fertig"` und die `url`. Längere Texte kommen mit `stand: "laeuft"` und einer Auftragsnummer zurück:
+
+1. Der Person **sofort** sagen, dass die Aufnahme läuft, wie viele Abschnitte es sind und wie lange es etwa noch dauert (`rest_sekunden_geschaetzt`) — nicht stumm warten.
+2. `voice_status` mit der Auftragsnummer aufrufen, bis `stand: "fertig"` kommt. Zwischenstände (`fortschritt`, z.B. „3 von 8 Abschnitten") ruhig weitergeben.
+3. Am Ende die `url` nennen **und fragen, ob die Datei direkt heruntergeladen werden soll.** Dazu ausserdem sagen: der Link gilt **24 Stunden**, danach ist die Datei gelöscht.
+
+**Freigabe.** Die Sprachausgabe steht nur Accounts offen, bei denen zusätzlich `voice_enabled` gesetzt ist (Hub Admin › MCP Access › Voice). Ohne Freigabe erscheinen die beiden Tools gar nicht; wird ein Aufruf trotzdem versucht, kommt „Voice generating ist für deinen Account nicht freigeschaltet" und es wird **nichts** abgebucht.
+
+**Preisbeispiele:** 900 Zeichen = 5 Cr · 5 000 Zeichen = 5 Cr · 5 001 Zeichen = 10 Cr · 25 000 Zeichen = 25 Cr. Ein angefangener Block zählt voll, deshalb lohnt es sich, nahe an der Blockgrenze zu bleiben statt knapp darüber.
 
 ## Parameter-Fallstricke (aus dem Vollaudit 2026-08-25)
 
@@ -501,6 +527,18 @@ E-Mail-Versand ist derzeit deaktiviert (siehe Abschnitt *Email*). Stattdessen:
 1. `personal_daily_horoscope` — Horoskop-Text holen
 2. Text direkt im Chat ausgeben, damit der User ihn kopieren kann
 3. Bei längeren Auswertungen: HTML bauen + `render_html_to_pdf` → PDF-Link weitergeben
+
+### "Lies mir das vor" / Sprechertext für einen Erklärfilm
+
+1. Text bereitstellen — entweder vom User geliefert oder selbst geschrieben (z.B. aus einem Horoskop). **Absätze mit Leerzeile trennen**, das gibt die Pausen.
+2. `generate_voice` mit dem Text. Bei mehr als ~1 500 Zeichen mit einem Auftrag rechnen.
+3. Kommt `stand: "laeuft"`: der Person den Fortschritt melden, dann `voice_status` nachfragen (kostenlos), bis fertig.
+4. `url` nennen, **Download anbieten**, auf die 24 Stunden hinweisen.
+
+Aus einem Horoskop ein Audio machen:
+1. `personal_daily_horoscope` (oder `my_horoscope`) → Text holen
+2. Den Text für das Ohr straffen — gesprochen wirkt anders als gelesen, Aufzählungen und Klammern rauswerfen
+3. `generate_voice` → MP3-Link
 
 ## Sprach-Handling
 

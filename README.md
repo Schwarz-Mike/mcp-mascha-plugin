@@ -75,7 +75,7 @@ Geburtsdaten hinterlegt sind.
 
 ### Die Serververbindung
 
-Ein Remote-MCP-Server mit **134 Werkzeugen** rund um Astrologie:
+Ein Remote-MCP-Server mit **137 Werkzeugen** rund um Astrologie:
 
 | Bereich | Was möglich ist |
 |---|---|
@@ -88,11 +88,33 @@ Ein Remote-MCP-Server mit **134 Werkzeugen** rund um Astrologie:
 | **Karten** | Astrokartographie, Relocation, Power-Zonen |
 | **Traditionell** | Stundenastrologie, Wahl-Astrologie, Rektifikation, Arabische Punkte |
 | **Konto** | eigenes Guthaben, gespeichertes Radix, angelegte Personen |
+| **Sprachausgabe** | Texte in der Mascha-Stimme vorlesen lassen, als MP3 oder WAV |
 
 Die Kontowerkzeuge greifen auf deine bereits in Mascha gespeicherten Daten zu: `my_account`
 zeigt Guthaben und hinterlegte Geburtsdaten, `my_radix` das gespeicherte Geburtshoroskop
 ohne Neuberechnung, `list_sub_users` und `sub_user_radix` die Personen, die du in Mascha
 angelegt hast.
+
+### Sprachausgabe — Texte in der Mascha-Stimme
+
+Claude kann Texte vorlesen lassen — in derselben Stimme, die du aus den Audios in der
+Mascha-App kennst. Gedacht für Erklärfilme, Sprechertexte, Meditationen oder einfach, um
+sich das eigene Tageshoroskop anzuhören statt es zu lesen.
+
+> „Lies mir mein Tageshoroskop vor“
+
+> „Mach aus diesem Text ein MP3 für meinen Erklärfilm“
+
+Bis 25 000 Zeichen pro Aufruf. Absatzgrenzen werden als hörbare Pausen umgesetzt, du
+kannst zwischen 15 Stimmen wählen und eine Sprechanweisung mitgeben („ruhig und
+feierlich“). Am Ende bekommst du einen Download-Link, der **24 Stunden** gilt — danach
+wird die Datei gelöscht. Längere Texte laufen im Hintergrund, Claude meldet den
+Fortschritt und sagt Bescheid, sobald die Aufnahme fertig ist.
+
+> **Extra freizuschalten.** Die Sprachausgabe ist nicht im normalen Zugang enthalten und
+> muss für dein Konto einzeln freigegeben werden. Schreib dazu an
+> **support@mascha-cosmos.com**. Ohne Freigabe erscheinen die beiden Werkzeuge nicht —
+> abgebucht wird in diesem Fall nichts.
 
 ### Die Skills
 
@@ -145,6 +167,10 @@ liest sie über `my_account` aus deinem Konto.
 Jeder Aufruf kostet Sterne, je nach Aufwand ein bis fünf. Werkzeuge, die nur deine
 gespeicherten Daten lesen, kosten einen Stern. Berechnungen mit Grafiken oder ausführlichen
 Deutungstexten kosten mehr.
+
+Die Sprachausgabe rechnet nach Textlänge ab: **fünf Sterne je angefangene 5 000 Zeichen**.
+Ein kurzer Absatz kostet also fünf Sterne, ein langer Sprechertext über 25 000 Zeichen
+fünfundzwanzig. Den Fortschritt abzufragen kostet nichts.
 
 Dein aktuelles Guthaben siehst du jederzeit mit „wie viele Sterne habe ich noch?" oder in
 der App unter [app.mascha-cosmos.com](https://app.mascha-cosmos.com).

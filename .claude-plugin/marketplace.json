@@ -9,8 +9,8 @@
     {
       "name": "mascha-cosmos",
       "displayName": "Mascha Cosmos",
-      "description": "Astrologie mit Mascha Cosmos: Geburtshoroskop, Transite, Synastrie, Human Design und Numerologie über den Mascha-MCP-Server — plus fertige Skills für Premium-PDF-Reports. Konto und Sterne-Guthaben erforderlich.",
-      "version": "1.0.0",
+      "description": "Astrologie mit Mascha Cosmos: Geburtshoroskop, Transite, Synastrie, Human Design und Numerologie über den Mascha-MCP-Server — neu mit Sprachausgabe in der Mascha-Stimme (Text-to-Speech als MP3) — plus fertige Skills für Premium-PDF-Reports. Konto und Sterne-Guthaben erforderlich.",
+      "version": "1.1.0",
       "author": {
         "name": "Mike Schwarz",
         "email": "support@mascha-cosmos.com"
@@ -18,7 +18,7 @@
       "source": "./",
       "category": "productivity",
       "homepage": "https://app.mascha-cosmos.com",
-      "keywords": ["astrologie", "horoskop", "astrology", "human-design", "numerologie"]
+      "keywords": ["astrologie", "horoskop", "astrology", "human-design", "numerologie", "text-to-speech", "sprachausgabe"]
     }
   ]
 }
