@@ -1,19 +1,14 @@
 ---
-name: partnerhoroscope
+name: mascha-partnerhoroskop
 description: >
-  Erstellt ein hochwertiges Premium-PDF-Beziehungshoroskop ("Partnerhoroskop") im Mascha
-  Cosmos Brand-Stil (Navy, Gold, Cream) für ein Paar. Nutze diesen Skill wenn der User ein
-  Beziehungshoroskop, einen Beziehungs-Report, ein Partnerhoroskop, einen Mascha Cosmos
-  PDF für ein Paar, eine Synastrie-Auswertung als PDF, eine Astropsychologie-Analyse für
-  zwei Personen oder eine vertiefte Paar-Analyse erstellen möchte. Trigger-Phrasen
-  "erstelle Beziehungshoroskop", "Partnerhoroskop für", "Mascha Beziehungs-PDF",
-  "Synastrie-Report", "Paar-Analyse als PDF", "Compatibility Report für Paar". Der Skill
-  ermittelt zuerst einen Speicherort, holt dann alle Daten via MASCHA-MCP API, speichert
-  sie in einer klienten_briefing.md (Rohdaten-Snapshot zur Reproduzierbarkeit), generiert
-  ein Cover-Bild via KIMASTERMIND_IMAGES, schreibt die Texte in der Mascha-Stilistik
-  (Deutsch, Du-Form, einfache Sprache, bedürfnis-orientiert, ohne Familien-Annahmen) und
-  baut daraus ein ~50-seitiges A4-PDF mit 30 Sektionen.
-version: 1.0.0
+  Erstellt das Premium-PDF «Partnerhoroskop» (Beziehungshoroskop), ca. 50 Seiten und 30 Kapitel im
+  Mascha-Cosmos-Stil, für ein Paar: Portraits, Synastrie, Composite, Liebessprachen, Bedürfnisse,
+  Konfliktlandkarte, Stärken und Schatten. Laden bei: "Partnerhoroskop", "Beziehungshoroskop",
+  "Beziehungs-Report", "Synastrie-Report als PDF", "Paar-Analyse als PDF", "Compatibility Report
+  für ein Paar". Holt die Daten über die Mascha-Werkzeuge, hält sie in einer klienten_briefing.md
+  fest, erzeugt ein Cover-Bild, schreibt die Texte und baut das PDF. Voraussetzung: der Hauptskill
+  mascha-main und genug Sterne; vor dem Start den Preis nennen.
+version: 1.1.0
 ---
 
 # Partnerhoroscope (Mascha Cosmos)

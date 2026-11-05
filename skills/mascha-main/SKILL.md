@@ -1,27 +1,19 @@
 ---
-name: astrology-mascha
+name: mascha-main
 description: >
-  Astrology tools via remote MCP at mcp.mascha-cosmos.com (OAuth via Mascha).
-  130 tools: natal/transit/synastry/composite/progression/solar-return/draconic/antiscia/saturn-return/local-space
-  charts, horoscopes (daily/weekly/monthly/yearly), relationship compatibility
-  & love languages, natal/transit/career/psychological reports, planetary
-  positions, fixed stars, Human Design, numerology, profections,
-  astrocartography, eclipses, Arabic parts, wellness, Jung archetypes,
-  business insights, electional astrology, horary, birth time rectification
-  (Rektifikation). Ptolemaic + non-Ptolemaic aspects (Semisextil, Quincunx,
-  Quintil, Biquintil). Media: generate_image,
-  render_html_to_pdf, generate_voice + voice_status (Sprachausgabe /
-  Text-to-Speech / Voice-over in der Mascha-Stimme, MP3 oder WAV --
-  Vorlesen, Sprechertext, Erklaerfilm, Meditation, Audio erzeugen).
-  Skills: list_skills, get_skill, install_skill (Skill
-  installieren/hinzufügen — Partnerhoroskop, Mutter-Kind-Horoskop,
-  Rektifikation). German: Geburtshoroskop, Synastrie, Kompatibilität,
-  Numerologie, Profektionen, Stundenastrologie, Fixsterne, Rektifikation,
-  Geburtszeit-Rückrechnung.
-version: 1.16.0
+  Hauptskill für ALLE Werkzeuge von Mascha Cosmos (152 Werkzeuge am MCP-Server
+  mcp.mascha-cosmos.com). Laden, sobald jemand etwas aus Astrologie, Human Design oder Numerologie
+  will: mein Radix, Geburtshoroskop, Geburtsbild, Transite, Synastrie, Partner-Passung, Composite,
+  Tages-/Wochen-/Monats-/Jahreshoroskop, Profektionen, Fixsterne, Astrokartographie, Mondphasen,
+  Eklipsen, Human Design, Numerologie, Wellness; ebenso bei gespeicherten Personen (Sub-Profile),
+  Sterne-Guthaben, Audios abholen oder erzeugen, Sprachausgabe/Vorlesen, Bild- und PDF-Erzeugung
+  und bei der Frage, was etwas kostet. Enthält Arbeitsweise, Parameter, Preisregeln (Sterne,
+  Preisliste, Bestätigung ab 30 Sternen) und die Werkzeugübersicht. Für Spezialfälle gibt es
+  eigene Skills: mascha-partnerhoroskop, mascha-mutter-kind, mascha-rectification.
+version: 2.0.0
 ---
 
-# Astrology Mascha — MCP Skill
+# Mascha Main — Hauptskill für alle Mascha-Werkzeuge
 
 Remote-MCP-Server für umfassende Astrologie-Tools, angebunden an deinen
 Mascha-Account (`app.mascha-cosmos.com`). Berechnet Geburtshoroskope,
@@ -37,34 +29,37 @@ eintragen. OAuth läuft automatisch; Login mit denselben Credentials wie
 auf app.mascha-cosmos.com. Ein Admin muss den MCP-Zugriff einmalig
 freischalten (`is_enabled = true` + Credits in Hub-Admin).
 
-## Wie Credits funktionieren
+## Sterne, Preise und Bestätigung
 
-Jeder Tool-Call zieht Credits. Überblick:
+Aufrufe kosten **Sterne**, abgebucht vom Mascha-Konto (gesammelt, sobald 30 Sterne offen sind).
+Der Preis hängt von der Mitgliedschaft der Person ab (`exp`, `pro`, `admin`).
 
-| Kategorie | Preis (= 1:1 Upstream) |
-|---|---|
-| Einfache Daten, Numerologie, Horoskop-Texte, Glossare | 1 Credit |
-| `planetary_positions`, `enhanced_positions` | 2 Credits (inkl. house-cusps für Selena/PoF) |
-| `aspects` (Ptolemäisch + Nebenaspekte), `non_ptolemaic_aspects` | 2 Credits |
-| Charts, Scores, Profektionen, Eklipsen, Horary (Daten) | 2 Credits |
-| Reports, Wellness, Fixed Stars, Electional (einfach) | 2–3 Credits |
-| Human Design (alle Tools inkl. Glossare) | 5 Credits |
-| Astrocartography (alle Tools inkl. Glossare) | 5 Credits |
-| Horary (ask, analyze, fertility) | 2–4 Credits |
-| SVG-Renderings (Natal/Synastry/Transit/Draconic etc.) | **10 Credits** |
-| Profektions-Renders (Rad, Doppelrad) | **10 Credits** |
-| Electional Search | 5 Credits |
-| Rektifikation Search (delta=60/step=4) | **15 Credits** ⚠️ |
-| rectification_event_categories (Glossar) | 1 Credit (0 upstream) |
-| generate_image (Evolink GPT-Image-2, medium/1K) | 2 Credits |
-| render_html_to_pdf (Puppeteer, A4) | 5 Credits |
-| `generate_voice` (Gemini TTS) | **5 Credits je angefangene 5000 Zeichen** |
-| `voice_status` (Stand abfragen) | **0 Credits** — beliebig oft |
+**Preisliste:** https://mcp.mascha-cosmos.com/mascha-mcp-preise — öffentlich, immer aktuell,
+dieselben Zahlen wie bei der Abbuchung. Als JSON und für eine Rolle:
+`https://mcp.mascha-cosmos.com/mascha-mcp-preise?format=json&rolle=pro`. Beim Verbinden meldet
+der Server ausserdem die Rolle der Person und die teuren Werkzeuge.
 
-Bei zu wenig Credits liefert das Tool `isError: true` mit einer
-freundlichen Hinweismeldung ("Nicht genug Credits…" / "Dein Account ist
-für MCP nicht freigeschaltet…"). Dann User bitten, sich an die
-Mascha-Admin zu wenden.
+So gehst du vor:
+
+1. **Einmal** zu Beginn des Gesprächs sagen: Aufrufe können Sterne kosten, die Preisliste liegt
+   unter dem Link oben. **Nicht bei jedem Aufruf** wiederholen.
+2. **Jede Antwort nennt ihre Kosten**: im JSON das Feld `sterne_kosten`, bei Text oder SVG die
+   letzte Zeile «Kosten dieses Aufrufs: n Sterne.».
+3. **Ab 30 Sternen je Aufruf** (z. B. SVG-Renderings, `rectification_search`, lange
+   `generate_voice`-Texte) führt der Server nur mit `bestaetigt: true` aus. Ohne diesen Wert kommt
+   nur der Preis zurück (`status: "bestaetigung_noetig"`, nichts wird ausgeführt oder gebucht).
+   Dann: Preis nennen, das **ausdrückliche OK** der Person holen, erst danach erneut mit
+   `bestaetigt: true` aufrufen. Niemals `bestaetigt: true` ohne dieses OK setzen.
+4. `create_audios` folgt derselben Regel (30 Sterne, einmal je Person und Sprache).
+5. `generate_voice` kostet je angefangene 5000 Zeichen; die Sperre greift, sobald der Text so
+   lang ist, dass der Aufruf 30 Sterne oder mehr kostet.
+
+Die «Cr»-Angaben bei den einzelnen Werkzeugen weiter unten sind ältere Richtwerte.
+**Massgeblich sind die Preisliste und das Feld `sterne_kosten`.**
+
+Bei zu wenig Sternen oder fehlender Freischaltung liefert das Werkzeug `isError: true` mit einer
+freundlichen Meldung («Nicht genug Sterne …», «… nicht freigeschaltet»). Dann die Person bitten,
+sich an Mascha Cosmos zu wenden.
 
 ## Pflicht-Eingaben (Geburtsdaten)
 
@@ -90,7 +85,7 @@ default, `"Sidereal"`), `tradition` (`"universal"` default,
 `"classical"`, `"psychological"`), `detail_level` (`"full"` default,
 `"standard"`).
 
-## Tools (137 am Endpoint /mcp)
+## Tools (152 am Endpoint /mcp)
 
 ### Charts (17) — Berechnung · `/api/v3/charts/*`
 
@@ -377,18 +372,21 @@ Meta-Tools zum Entdecken, Laden und Installieren von Skill-Definitionen (SKILL.m
 
 **Verfügbare Skills auf diesem Server:**
 
-| Name | Laden (Session) | Installieren (dauerhaft) |
+| Name (Aufruf mit /) | Laden (Session) | Installieren (dauerhaft) |
 |---|---|---|
-| `astrology-mascha` | `get_skill name: "astrology-mascha"` | `install_skill name: "astrology-mascha"` |
-| `rectification-mascha` | `get_skill name: "rectification"` | `install_skill name: "rectification"` |
-| `partnerhoroscope` | `get_skill name: "partnerhoroscope"` | `install_skill name: "partnerhoroscope"` |
-| `mutter-kind-horoskop` | `get_skill name: "mutter-kind-horoskop"` | `install_skill name: "mutter-kind-horoskop"` |
+| `mascha-main` | `get_skill name: "mascha-main"` | `install_skill name: "mascha-main"` |
+| `mascha-rectification` | `get_skill name: "mascha-rectification"` | `install_skill name: "mascha-rectification"` |
+| `mascha-partnerhoroskop` | `get_skill name: "mascha-partnerhoroskop"` | `install_skill name: "mascha-partnerhoroskop"` |
+| `mascha-mutter-kind` | `get_skill name: "mascha-mutter-kind"` | `install_skill name: "mascha-mutter-kind"` |
 
-**`rectification-mascha`** (v1.0.0) — Vollständiger Workflow für Geburtszeit-Rektifikation: Basisdaten erfragen, Ereignisse priorisieren, Parameter berechnen, API-Call ausführen, Response per Grep auslesen, Ergebnis strukturiert präsentieren. **Vor einer Rektifikation immer diesen Skill laden!**
+Frühere Namen (`astrology-mascha`, `rectification`, `partnerhoroscope`, `mutter-kind-horoskop`)
+werden vom Server weiter erkannt, bitte aber die neuen verwenden.
 
-**`partnerhoroscope`** (v1.0.0) — Erstellt ein ~50-seitiges Premium-PDF-Beziehungshoroskop im Mascha Cosmos Brand-Stil für ein Paar (30 Sektionen: Portraits, Synastrie, Composite, Liebessprachen, Konfliktlandkarte …). **Bei jedem Partner-/Beziehungs-PDF diesen Skill laden.**
+**`mascha-rectification`** (v1.1.0) — Vollständiger Workflow für Geburtszeit-Rektifikation: Basisdaten erfragen, Ereignisse priorisieren, Parameter berechnen, API-Call ausführen, Response per Grep auslesen, Ergebnis strukturiert präsentieren. **Vor einer Rektifikation immer diesen Skill laden!** Der Suchlauf kostet viele Sterne — Preis nennen, OK holen.
 
-**`mutter-kind-horoskop`** (v1.0.0) — Erstellt ein ~35-seitiges Premium-PDF Mutter-Kind- bzw. Eltern-Kind-Horoskop: ein Elternteil versteht sein Kind in der Tiefe (Wesen, Gefühle, Kommunikation, Herausforderungen, Eltern-Kind-Synastrie, Selbstfürsorge). Funktioniert für Mutter/Vater × Sohn/Tochter. **Bei jedem Kind-Report für Eltern diesen Skill laden.**
+**`mascha-partnerhoroskop`** (v1.1.0) — Erstellt ein ~50-seitiges Premium-PDF-Beziehungshoroskop im Mascha Cosmos Brand-Stil für ein Paar (30 Sektionen: Portraits, Synastrie, Composite, Liebessprachen, Konfliktlandkarte …). **Bei jedem Partner-/Beziehungs-PDF diesen Skill laden.**
+
+**`mascha-mutter-kind`** (v1.1.0) — Erstellt ein ~35-seitiges Premium-PDF Mutter-Kind- bzw. Eltern-Kind-Horoskop: ein Elternteil versteht sein Kind in der Tiefe (Wesen, Gefühle, Kommunikation, Herausforderungen, Eltern-Kind-Synastrie, Selbstfürsorge). Funktioniert für Mutter/Vater × Sohn/Tochter. **Bei jedem Kind-Report für Eltern diesen Skill laden.**
 
 > **Hinweis für dich als Assistent:** Wenn eine Anfrage klar zu einem dieser Spezial-Skills
 > gehört (Partner-PDF, Kind-Report, Rektifikation), lade ihn **bevor** du mit der Arbeit
@@ -416,6 +414,18 @@ Rektifikation = Rückrechnung der genauen Geburtszeit anhand bekannter Lebensere
 **Kostenkontrolle:** Kleineres Suchfenster (`delta_minutes`) und größere Schrittweite (`step_minutes`) sparen Credits. Für erste grobe Suche: `delta_minutes: 30`, `step_minutes: 10` (günstig). Für Feinabstimmung: `delta_minutes: 15`, `step_minutes: 2`.
 
 **Hinweis:** Wenn nur Monat bekannt: `date_precision: "month"` setzen. Je mehr Ereignisse, desto präziser das Ergebnis.
+
+### Audios (4) — fertige und neue Aufnahmen aus dem Mascha-Konto
+
+- **`get_audios`** (kostenlos) — listet die fertigen Aufnahmen des Kontos: Radix-Highlights,
+  Seelenformel (in Hörreihenfolge), Tages- und Wochenhoroskop (`gruppe: "horoskop"`). Mit Titel,
+  Audio-ID, Länge und Datum; Aufnahmen angelegter Personen sind am Feld `person` erkennbar.
+- **`get_audio`** (kostenlos) — EINE Aufnahme als abspielbarer Link (gilt 72 Stunden) anhand der
+  Audio-ID aus `get_audios`.
+- **`create_audios`** — lässt die Radix-Highlights in Maschas Stimme erzeugen. **30 Sterne**, einmal
+  je Person und Sprache. Ohne `bestaetigt: true` kommen nur Preis, Guthaben und Bestand zurück:
+  immer erst so aufrufen, den Preis nennen und zustimmen lassen.
+- **`audio_status`** (kostenlos) — Stand des Erzeugens, das im Hintergrund läuft.
 
 ### Media (4) — server-seitige Generierung (NEW v1.7.0 · Sprachausgabe seit v1.16.0)
 

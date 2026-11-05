@@ -26,13 +26,13 @@ Dann bitte vorher entfernen, sonst hast du sie doppelt — das Plugin bringt all
 hält sie aktuell:
 
 ```bash
-rm -rf ~/.claude/skills/{astrology-mascha,partnerhoroscope,mutter-kind-horoskop,rectification}
+rm -rf ~/.claude/skills/{astrology-mascha,partnerhoroscope,mutter-kind-horoskop,rectification,mascha-main,mascha-partnerhoroskop,mascha-mutter-kind,mascha-rectification}
 ```
 
 Unter Windows in der PowerShell:
 
 ```powershell
-"astrology-mascha","partnerhoroscope","mutter-kind-horoskop","rectification" | ForEach-Object {
+"astrology-mascha","partnerhoroscope","mutter-kind-horoskop","rectification","mascha-main","mascha-partnerhoroskop","mascha-mutter-kind","mascha-rectification" | ForEach-Object {
   Remove-Item -Recurse -Force "$env:USERPROFILE\.claude\skills\$_" -ErrorAction SilentlyContinue }
 ```
 
@@ -118,23 +118,35 @@ Fortschritt und sagt Bescheid, sobald die Aufnahme fertig ist.
 
 ### Die Skills
 
-Fünf Arbeitsanleitungen, die Claude automatisch heranzieht, wenn sie passen:
+Fünf Arbeitsanleitungen, die Claude automatisch heranzieht, wenn sie passen. Alle heissen
+einheitlich `mascha-…` und lassen sich auch von Hand mit `/` aufrufen. Im Plugin lautet der
+Aufruf `/mascha-cosmos:mascha-main` usw.; Claude lädt sie aber von selbst, wenn du z. B. sagst
+„mach mir mein Radix".
 
-**`astrology-mascha`** — die Grundlage. Erklärt Claude alle Werkzeuge, ihre Parameter,
+| Skill | Aufruf | Was er tut |
+|---|---|---|
+| `mascha-main` | `/mascha-main` | Hauptskill: alle Werkzeuge, Parameter, Abläufe, Preisregeln |
+| `mascha-partnerhoroskop` | `/mascha-partnerhoroskop` | Premium-PDF Beziehungshoroskop |
+| `mascha-mutter-kind` | `/mascha-mutter-kind` | Premium-PDF Mutter-/Eltern-Kind-Horoskop |
+| `mascha-rectification` | `/mascha-rectification` | Geburtszeit-Rektifikation |
+| `mascha-setup` | `/mascha-setup` | Einrichtung und Guthaben prüfen |
+
+**`mascha-main`** — die Grundlage. Erklärt Claude alle Werkzeuge, ihre Parameter,
 typische Abläufe und die Besonderheiten der Deutung (Huber-Methode, Koch-Häuser,
-nicht-ptolemäische Aspekte). Wird bei fast jeder astrologischen Frage aktiv.
+nicht-ptolemäische Aspekte), dazu die Preisregeln mit Sternen. Wird bei fast jeder
+astrologischen Frage aktiv.
 
-**`partnerhoroscope`** — erstellt ein rund 50-seitiges Premium-PDF-Beziehungshoroskop im
+**`mascha-partnerhoroskop`** — erstellt ein rund 50-seitiges Premium-PDF-Beziehungshoroskop im
 Mascha-Cosmos-Stil: 30 Abschnitte von Synastrie über Kommunikation und Konfliktlandkarte
 bis zur spirituellen Aufgabe. Bringt Layout-Skripte, Symbolbibliothek und Bildmaterial mit.
 
-**`mutter-kind-horoskop`** — ein rund 35-seitiges PDF, mit dem ein Elternteil sein Kind in
+**`mascha-mutter-kind`** — ein rund 35-seitiges PDF, mit dem ein Elternteil sein Kind in
 der Tiefe versteht: Wesen, Gefühlswelt, Lernen, sensible Stellen und wie es liebevoll
 begleitet wird. Funktioniert für Mutter oder Vater, Sohn oder Tochter.
 
-**`rectification`** — Geburtszeit-Rektifikation: rechnet aus bekannten Lebensereignissen
+**`mascha-rectification`** — Geburtszeit-Rektifikation: rechnet aus bekannten Lebensereignissen
 zurück, wann jemand wahrscheinlich geboren wurde. Für alle, die ihre Geburtszeit nicht
-kennen.
+kennen. Der Suchlauf ist teuer (meist 75 Sterne) und läuft erst nach deinem OK.
 
 **`mascha-setup`** — prüft die Einrichtung: Verbindung, Sterne-Guthaben, hinterlegte
 Geburtsdaten. Greift automatisch bei Fragen wie „funktioniert Mascha?" oder wenn ein
@@ -148,8 +160,8 @@ Aufruf scheitert.
 
 > „Wie sind meine Transite heute?"
 
-> „Wie passen wir zusammen? Ich bin am 6.2.1973 um 9:05 in Zürich geboren, sie am
-> 7.10.1972 um 12:57 in Bern"
+> „Wie passen wir zusammen? Ich bin am 14.3.1985 um 8:30 in Zürich geboren, sie am
+> 2.9.1987 um 17:10 in Bern"
 
 > „Zeig mir mein Human Design"
 
@@ -164,9 +176,16 @@ liest sie über `my_account` aus deinem Konto.
 
 ## Sterne und Kosten
 
-Jeder Aufruf kostet Sterne, je nach Aufwand ein bis fünf. Werkzeuge, die nur deine
-gespeicherten Daten lesen, kosten einen Stern. Berechnungen mit Grafiken oder ausführlichen
-Deutungstexten kosten mehr.
+Jeder Aufruf kann Sterne kosten, je nach Aufwand und je nach deiner Mitgliedschaft.
+Werkzeuge, die nur deine gespeicherten Daten lesen, sind günstig oder kostenlos; Grafiken und
+ausführliche Berechnungen kosten mehr.
+
+- **Preisliste:** [mcp.mascha-cosmos.com/mascha-mcp-preise](https://mcp.mascha-cosmos.com/mascha-mcp-preise)
+  — öffentlich, immer aktuell, dieselben Zahlen wie bei der Abbuchung.
+- Claude weist dich **einmal** zu Beginn darauf hin, nicht bei jedem Aufruf. Jede Antwort nennt,
+  was der Aufruf gekostet hat (`sterne_kosten`).
+- **Ab 30 Sternen je Aufruf** fragt Claude zuerst nach deinem ausdrücklichen OK und nennt den
+  Preis. Ohne dein Ja wird nichts ausgeführt und nichts abgebucht.
 
 Die Sprachausgabe rechnet nach Textlänge ab: **fünf Sterne je angefangene 5 000 Zeichen**.
 Ein kurzer Absatz kostet also fünf Sterne, ein langer Sprechertext über 25 000 Zeichen
@@ -189,11 +208,15 @@ Beispiele in den Skills verwenden ausschliesslich erfundene Personen.
 
 ## Neue Skills
 
-Kommen weitere Skills dazu, erscheinen sie nach einem Update des Plugins automatisch:
+Kommen weitere Skills dazu oder ändert sich einer, erscheint das nach einem Update des Plugins
+(die Version steht in `.claude-plugin/plugin.json`):
 
 ```bash
 claude plugin marketplace update mascha-cosmos
+claude plugin update mascha-cosmos@mascha-cosmos
 ```
+
+Danach Claude neu starten. Die Änderungen je Version stehen in [CHANGELOG.md](CHANGELOG.md).
 
 ---
 

@@ -1,15 +1,17 @@
 ---
-name: rectification-mascha
+name: mascha-rectification
 description: >
-  Geburtszeit-Rektifikation via Mascha MCP. Berechnet die wahrscheinlichste
-  Geburtszeit anhand bekannter Lebensereignisse. Trigger: Rektifikation,
-  Geburtszeit rückrechnen, Geburtszeit berechnen, Geburtszeit unbekannt,
-  Geburtszeit ermitteln, Geburtszeitkorrektur, birth time rectification,
-  Geburtszeit herausfinden, ungenaue Geburtszeit, Geburtszeit korrigieren.
-version: 1.0.0
+  Berechnet die wahrscheinlichste Geburtszeit einer Person aus bekannten Lebensereignissen
+  (Geburtszeit-Rektifikation). Laden bei: Rektifikation, Geburtszeit unbekannt, Geburtszeit
+  rückrechnen / ermitteln / herausfinden / korrigieren, ungenaue Geburtszeit, "birth time
+  rectification". Führt durch den ganzen Ablauf: Basisdaten, Ereignisse mit Datum und Kategorie,
+  Suchfenster, Suche mit rectification_search, Ergebnis prüfen. ACHTUNG: rectification_search
+  kostet bei den meisten Mitgliedschaften 75 Sterne und läuft erst nach ausdrücklichem OK des
+  Nutzers (bestaetigt: true); vorher den Preis nennen.
+version: 1.1.0
 ---
 
-# Rectification Mascha — Geburtszeit-Rektifikation
+# Mascha Rectification — Geburtszeit-Rektifikation
 
 Berechne die wahrscheinlichste Geburtszeit einer Person anhand bekannter
 Lebensereignisse über den `rectification_search` MCP-Endpoint.
@@ -86,6 +88,10 @@ Für Jahresdaten ohne Monat: Monat "06" (Mitte des Jahres) einsetzen, date_preci
 
 Rufe `rectification_search` mit allen Daten auf. Kein vorheriger
 `rectification_event_categories`-Call nötig — die Kategorien sind bekannt.
+
+**Zuerst Preis und OK:** Der Suchlauf kostet viele Sterne (siehe Kosten-Hinweis unten). Nenne der
+Person den Preis und warte auf ihr ausdrückliches Ja. Erst dann `rectification_search` mit
+`bestaetigt: true` aufrufen; ohne diesen Wert kommt nur der Preis zurück.
 
 **Bekannte Kategorie-Keys:**
 `marriage`, `divorce`, `child_birth`, `death_family`, `career_change`,
@@ -164,10 +170,12 @@ Astrologie ist kein Beweis — Rektifikation ist eine fundierte Einschätzung.
 
 ## Kosten-Hinweis
 
-- `rectification_event_categories`: 0 Credits (nur bei Bedarf aufrufen — die Keys oben reichen)
-- `rectification_search`: **15 Credits pro Call** (fix, unabhängig von Eventanzahl/Schrittgrösse)
-- Typisch 1 Call pro Person = 15 Credits
-- Bei Nachberechnung mit mehr Events = nochmals 15 Credits
+- `rectification_event_categories`: kostenlos bzw. sehr günstig (nur bei Bedarf aufrufen — die Keys oben reichen)
+- `rectification_search`: bei den meisten Mitgliedschaften **75 Sterne pro Aufruf** (massgeblich ist die
+  Preisliste https://mcp.mascha-cosmos.com/mascha-mcp-preise), unabhängig von Eventanzahl und Schrittgrösse.
+- Wegen der Höhe führt der Server den Aufruf nur mit `bestaetigt: true` aus. **Vorher den Preis nennen
+  und das ausdrückliche OK der Person holen.** Der erste Aufruf ohne `bestaetigt` liefert nur den Preis.
+- Bei Nachberechnung mit mehr Ereignissen kostet jeder weitere Suchlauf erneut den vollen Preis.
 
 ---
 

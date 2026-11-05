@@ -1,18 +1,15 @@
 ---
-name: mutter-kind-horoskop
+name: mascha-mutter-kind
 description: >
-  Erstellt ein hochwertiges Premium-PDF "Mutter-Kind-Horoskop" bzw. Eltern-Kind-Horoskop
-  im Mascha Cosmos Brand-Stil (warmes Cover, Gold/Navy/Cream, 3D-Boxen, Index, Bild pro
-  Kapitel, CTA) für ein Elternteil und sein Kind. Der Elternteil liest den Report, um sein
-  Kind in der Tiefe zu verstehen: Wesen, Gefühle, Kommunikation, Herausforderungen und wie
-  es liebevoll begleitet wird. Nutze diesen Skill bei Trigger-Phrasen wie
-  "Mutter-Kind-Horoskop", "Mutter Kind Horoskop erstellen", "Eltern-Kind-Horoskop",
-  "Kind-Horoskop für die Mama/den Papa", "erstelle ein Horoskop für Mutter und Kind",
-  "Vater-Kind-Horoskop", "wie begleite ich mein Kind astrologisch". Holt Daten via
-  MASCHA-MCP (Natal beider, Synastrie, Numerologie, psychologische Analyse), generiert
-  personenspezifische Bilder, schreibt herzliche Du-Form-Texte aus den echten Daten, baut
-  ein ~35-seitiges A4-PDF und prüft die Umbrüche.
-version: 1.0.0
+  Erstellt das Premium-PDF «Mutter-Kind-Horoskop» (auch Vater-Kind- und Eltern-Kind-Horoskop), ca.
+  35 Seiten im Mascha-Cosmos-Stil: Ein Elternteil versteht sein Kind in der Tiefe (Wesen, Gefühle,
+  Kommunikation, sensible Stellen, Eltern-Kind-Verbindung, Begleitung, Selbstfürsorge). Laden bei:
+  "Mutter-Kind-Horoskop", "Eltern-Kind-Horoskop", "Vater-Kind-Horoskop", "Horoskop für mein Kind
+  als PDF", "wie begleite ich mein Kind astrologisch". Holt die Daten über die Mascha-Werkzeuge
+  (Radix beider, Synastrie, Numerologie), erzeugt Bilder, schreibt die Texte in Du-Form und baut
+  das PDF. Voraussetzung: der Hauptskill mascha-main und genug Sterne; vor dem Start den Preis
+  nennen.
+version: 1.1.0
 ---
 
 # Mutter-Kind-Horoskop (Mascha Cosmos)
